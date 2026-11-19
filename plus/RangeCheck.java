@@ -6,6 +6,11 @@ public class RangeCheck {
 
     public static void size(int lo, int hi) {
         // TODO (3): build a valid Range and check the contract of size()
-        assert false;   // remove this line
+        CProver.assume(lo <= hi);
+
+        Range r = new Range(lo, hi);
+        long result = r.size();
+
+        assert (long) result == (long) hi - lo + 1;
     }
 }

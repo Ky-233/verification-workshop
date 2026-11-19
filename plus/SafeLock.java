@@ -21,7 +21,10 @@ public final class SafeLock {
     private int failed = 0;                // wrong PINs in a row
 
     // bonus 2: a class invariant for OpenJML
-
+    //@ private invariant state != null;
+    //@ private invariant 0 <= failed && failed <= MAX_ATTEMPTS;
+    //@ private invariant (state == State.BLOCKED) <==> (failed == MAX_ATTEMPTS);
+    //@ private invariant (state == State.OPEN) ==> (failed == 0);
     public SafeLock(int pin, int adminCode) {
         this.pin = pin;
         this.adminCode = adminCode;
@@ -60,7 +63,7 @@ public final class SafeLock {
     private void close() {
         if (state == State.OPEN) {
             state = State.LOCKED;
+            failed = 0;
         }
-        failed = 0;
     }
 }

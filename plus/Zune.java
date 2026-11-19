@@ -15,16 +15,14 @@ public class Zune {
     static int yearOf(int days) {
         int year = ORIGIN_YEAR;
         //@ loop_invariant 1 <= days && ORIGIN_YEAR <= year && days + 365 * (year - ORIGIN_YEAR) <= \old(days);
-        while (days > 365) {
+        //@ decreases days;
+        while (days > (isLeapYear(year) ? 366 : 365)) {
             if (isLeapYear(year)) {
-                if (days > 366) {
-                    days -= 366;
-                    year += 1;
-                }
+                days -= 366;
             } else {
                 days -= 365;
-                year += 1;
             }
+            year += 1;
         }
         return year;
     }
